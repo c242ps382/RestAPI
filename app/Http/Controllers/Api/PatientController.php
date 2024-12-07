@@ -34,7 +34,7 @@ class PatientController extends Controller
         'tanggal_lahir' => 'required|date',
         'alamat' => 'required|string',
         'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-        'umur'=> 'required|string',
+        'umur' => 'required|integer',  // Perbaikan disini
         'nomor_hp' => 'required|string|max:15',
     ]);
 
