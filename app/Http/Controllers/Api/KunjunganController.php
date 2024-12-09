@@ -82,6 +82,7 @@ class KunjunganController extends Controller
                 'user' => [
                     'nama' => $kunjungan->patient->nama,
                     'alamat' => $kunjungan->patient->alamat,
+                    'tanggal_lahir' => $kunjungan->patient->tanggal_lahir,
                     'jenis_kelamin' => $kunjungan->patient->jenis_kelamin,
                     'umur' => $kunjungan->patient->umur
                 ],
@@ -90,7 +91,8 @@ class KunjunganController extends Controller
                     'nomor_kunjungan' => $kunjungan->nomor_kunjungan,
                     'tanggal_kunjungan' => $kunjungan->tanggal_kunjungan,
                     'keluhan' => $kunjungan->keluhan,
-                    'tindakan' => $kunjungan->tindakan
+                    'tindakan' => $kunjungan->tindakan,
+                    'biaya_pembayaran' => $kunjungan->biaya_pembayaran
                 ]
             ]);
         }

@@ -23,7 +23,7 @@ return [
 
        'gcs' => [
     'driver' => 'gcs',
-    'key_file_path' => env('GOOGLE_CLOUD_KEY_FILE', base_path('service-account.json')),
+    'key_file_path' => null,
     'project_id' => env('GOOGLE_CLOUD_PROJECT_ID', 'your-project-id'),
     'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET', 'your-bucket'),
     'storage_api_uri' => env('GOOGLE_CLOUD_STORAGE_API_URI', null),

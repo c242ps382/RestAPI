@@ -15,7 +15,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         // Validasi input
         $validated = $request->validate([
             'name' => 'nullable|string|max:255',
