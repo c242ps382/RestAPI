@@ -32,7 +32,7 @@ class BeritaController extends Controller
         $validatedData = $request->validate([
             'update' => 'required|string',
             'title' => 'required|string|max:255',
-            'imageurl' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'imageurl' => 'required|image|mimes:jpeg,png,jpg|max:20480',
             'infotitle' => 'required|string|max:255',
             'description' => 'required|string',
         ]);
