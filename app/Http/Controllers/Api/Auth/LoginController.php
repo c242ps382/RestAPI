@@ -28,9 +28,17 @@ class LoginController extends Controller
             // Generate token
             $token = $user->createToken('todo-api')->plainTextToken;
 
-            // Kembalikan token dalam format JSON
+            // Kembalikan token dan data pengguna dalam format JSON
             return response()->json([
-                'token' => $token
+                'token' => $token,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'username' => $user->username,
+                    'alamat' => $user->alamat,
+                    'imgprofile' => $user->imgprofile,
+                ],
             ]);
         }
 

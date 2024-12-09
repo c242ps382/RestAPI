@@ -15,7 +15,7 @@ class Medic extends Model
         'nama_pasien',
         'anamnesa',
         'data_objektif',
-        'input_genjala',
+        'gejala',
         'predicted_diagnosa',
         'hasil_diagnosa',
         'tindakan',
@@ -28,6 +28,11 @@ class Medic extends Model
     protected $casts = [
         'tanggal_kunjungan' => 'date',
     ];
+
+    public function getTanggalKunjunganAttribute($value)
+{
+    return \Carbon\Carbon::parse($value)->format('d-m-Y');
+}
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'nama_pasien', 'nama');

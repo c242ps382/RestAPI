@@ -24,6 +24,7 @@ class MedicController extends Controller
             'anamnesa.detak_nadi' => 'required|string|max:10', // Detak Nadi
             'anamnesa.berat_badan' => 'required|string|max:10', // Berat Badan
             'anamnesa.tinggi_badan' => 'required|string|max:10', // Tinggi Badan
+            'gejala' => 'required|string',
             'hasil_diagnosa' => 'required|string',
             'tindakan' => 'required|string',
         ]);
@@ -37,6 +38,7 @@ class MedicController extends Controller
             'tanggal_kunjungan' => $validatedData['tanggal_kunjungan'],
             'nama_pasien' => $validatedData['nama_pasien'],
             'anamnesa' => $anamnesa, // Simpan sebagai JSON
+            'gejala' => $validatedData['gejala'],
             'hasil_diagnosa' => $validatedData['hasil_diagnosa'],
             'tindakan' => $validatedData['tindakan'],
         ]);
@@ -64,6 +66,7 @@ class MedicController extends Controller
              'nama_pasien' => 'sometimes|required|exists:patients,nama',
              'hasil_diagnosa' => 'sometimes|required|string',
              'tindakan' => 'sometimes|required|string',
+             'gejala' => 'sometimes|required|string',
              'anamnesa' => 'sometimes|required|array',
              'anamnesa.sistole_diastol' => 'sometimes|required_with:anamnesa|string|max:20',
              'anamnesa.suhu' => 'sometimes|required_with:anamnesa|string|max:10',

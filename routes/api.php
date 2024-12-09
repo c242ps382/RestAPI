@@ -5,8 +5,8 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\KunjunganController;
 use App\Http\Controllers\Api\MedicController;
+use App\Http\Controllers\Api\BeritaController;
 use App\Http\Controllers\Api\NonmedicController;
-use App\Http\Controllers\Api\TodoController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -41,4 +41,37 @@ Route::get('nonmedics/patients/options', [NonmedicController::class, 'getPatient
 Route::put('nonmedics/update/{id}', [NonmedicController::class, 'update']); // Update Data Non Medis
 
 Route::get('kunjungan', [KunjunganController::class, 'getAllKunjungan']); // Show Data Medis dan Non Medis
+Route::delete('kunjungan/{type}/{id}', [KunjunganController::class, 'deleteKunjungan']);
+Route::get('kunjungandetail/{type}/{id}', [KunjunganController::class, 'getKunjunganDetail']);
 
+
+Route::get('berita', [BeritaController::class, 'index']);
+Route::get('berita/upload', function () {
+    return view('berita');
+});
+Route::post('berita/store', [BeritaController::class, 'store']);
+/*
+
+Route = https://laravel-923957567288.asia-southeast2.run.app/
+
+/user/update/{id} = Update Profil
+/register = Registrasi
+/login = Login
+/logout = Logout
+
+/patients = Show data Patient
+/patients/store = Add data Patient
+/patients/update/{id} = Update Patient
+/patients/delete/{id} = Delete Patient
+
+/medics/store = Add data Medis
+/medics/update/{id} = Update Data Medis
+/medics/patients/options = Filter username di form medis
+
+/nonmedics/store = Add Data NonMedis
+/nonmedics/patients/options = Filter username di form non medis
+/nonmedics/update/{id} = Update Data Non Medis
+
+/kunjungan = Show Data Medis dan Non Medis
+
+*/

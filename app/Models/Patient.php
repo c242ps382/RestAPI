@@ -19,7 +19,14 @@ class Patient extends Model
     ];
 
     // Menentukan tabel database yang digunakan
+    protected $casts = [
+        'tanggal_lahir' => 'date',
+    ];
 
+    public function getTanggalLahirAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
 
     public function medis()
     {

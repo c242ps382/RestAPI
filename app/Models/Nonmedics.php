@@ -22,6 +22,14 @@ class Nonmedics extends Model
 
 
     ];
+    protected $casts = [
+        'tanggal_kunjungan' => 'date',
+    ];
+
+    public function getTanggalKunjunganAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
 
     public function getBiayaPembayaranAttribute($value)
     {

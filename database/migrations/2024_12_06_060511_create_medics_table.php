@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nomor_kunjungan')->unique();
             $table->date('tanggal_kunjungan');
             $table->string('nama_pasien');
+            $table->string('gejala');
             $table->json('anamnesa')->nullable();
             $table->text('hasil_diagnosa');
             $table->text('tindakan');
