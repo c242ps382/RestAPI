@@ -14,7 +14,6 @@
         <input type="email" name="email" placeholder="Email" required>
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
-        <input type="password" name="password_confirmation" placeholder="Confirm Password"><br>
         <input type="text" name="alamat" placeholder="Alamat" required>
         <input type="file" name="imgprofile"><br>
         <button type="submit">Update</button>
