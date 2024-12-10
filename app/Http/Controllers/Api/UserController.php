@@ -15,49 +15,57 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $user = User::findOrFail($id);
         // Validasi input
-        $validated = $request->validate([
-            'name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:users,email,' . $id,
-            'alamat' => 'nullable|string|max:255',
-            'username' => 'nullable|string|unique:users,username,' . $id,
-            'imgprofile' => 'nullable|image|mimes:jpg,jpeg,png|max:20480', // Validasi gambar profil
-            'password' => 'nullable|string|min:8', // Pastikan password dikonfirmasi jika ada
+        $request->validate([
+            'name' => ['sometimes', 'min:3'],
+            'email' => ['sometimes', 'email', 'unique:users,email,' . $id],
+            'password' => ['sometimes', 'min:8'],
+            'username' => ['sometimes', 'min:3', 'unique:users,username,' . $id],
+            'alamat' => ['sometimes', 'min:5'],
+            'imgprofile' => ['sometimes', 'image', 'max:2048'],
         ]);
 
-        // Cari pengguna berdasarkan ID
+        // Cari user berdasarkan ID
+        $user = User::findOrFail($id);
 
+        // Update data user
+        $user->name = $request->input('name', $user->name);
+        $user->email = $request->input('email', $user->email);
+        $user->username = $request->input('username', $user->username);
+        $user->alamat = $request->input('alamat', $user->alamat);
 
-        // Perbarui password jika ada
+        // Update password jika diberikan
         if ($request->filled('password')) {
-            $validated['password'] = Hash::make($request->password);
+            $user->password = Hash::make($request->password);
         }
 
-        // Perbarui gambar profil jika ada
+        // Upload imgprofile ke bucket GCP jika ada
         if ($request->hasFile('imgprofile')) {
             // Hapus gambar lama jika ada
             if ($user->imgprofile) {
-                Storage::disk('gcs')->delete($user->imgprofile); // Menghapus gambar lama dari GCS
+                Storage::disk('gcs')->delete($user->imgprofile);
             }
 
-            // Dapatkan nama file asli
-            $fileName = $request->file('imgprofile')->getClientOriginalName();
-
-            // Simpan gambar baru dengan nama file asli ke GCS
-            $path = $request->file('imgprofile')->storeAs('profile-images', $fileName, 'gcs');
-
-            // Dapatkan URL publik dari gambar yang disimpan
-            $validated['imgprofile'] = Storage::disk('gcs')->url($path);
+            // Upload gambar baru
+            $path = $request->file('imgprofile')->store('profiles', 'gcs');
+            $user->imgprofile = Storage::disk('gcs')->url($path);
         }
 
-        // Perbarui data pengguna
-        $user->update($validated);
+        // Simpan perubahan ke database
+        $user->save();
 
+        // Kembalikan respon
         return response()->json([
-            'message' => 'User updated successfully',
-            'user' => $user
+            'message' => 'User updated successfully.',
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'username' => $user->username,
+                'alamat' => $user->alamat,
+                'imgprofile' => $user->imgprofile,
+            ],
         ], 200);
     }
 }
+

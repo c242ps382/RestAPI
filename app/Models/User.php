@@ -17,6 +17,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+     //https://docs.google.com/document/d/14rIEzQMADtHug_AckXiOrHOpFW3xH4bk6osKxdT9pWc/edit?tab=t.0
+     //https://www.youtube.com/watch?v=vQPeQcb4clQ
     protected $fillable = [
         'name',
         'email',
@@ -26,6 +29,7 @@ class User extends Authenticatable
         'imgprofile',
     ];
 
+    protected $table = 'users';
     /**
      * The attributes that should be hidden for serialization.
      *
