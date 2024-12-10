@@ -37,7 +37,8 @@ class RegisterController extends Controller
 
         // Kembalikan token dan data pengguna dalam format JSON
         return response()->json([
-            'token' => $token,
+            'message' => 'User registered successfully.', // Tambahkan pesan sukses
+            'token' => $token, // Token autentikasi
             'user' => [
                 'id' => $registered->id,
                 'name' => $registered->name,
@@ -46,6 +47,6 @@ class RegisterController extends Controller
                 'alamat' => $registered->alamat,
                 'imgprofile' => $registered->imgprofile,
             ],
-        ]);
+        ], 201);
     }
 }

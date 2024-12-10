@@ -15,6 +15,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $user = User::findOrFail($id);
         // Validasi input
         $validated = $request->validate([
             'name' => 'nullable|string|max:255',
@@ -22,11 +24,11 @@ class UserController extends Controller
             'alamat' => 'nullable|string|max:255',
             'username' => 'nullable|string|unique:users,username,' . $id,
             'imgprofile' => 'nullable|image|mimes:jpg,jpeg,png|max:20480', // Validasi gambar profil
-            'password' => 'nullable|string|min:8|confirmed', // Pastikan password dikonfirmasi jika ada
+            'password' => 'nullable|string|min:8', // Pastikan password dikonfirmasi jika ada
         ]);
 
         // Cari pengguna berdasarkan ID
-        $user = User::findOrFail($id);
+
 
         // Perbarui password jika ada
         if ($request->filled('password')) {
