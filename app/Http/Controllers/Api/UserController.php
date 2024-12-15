@@ -15,8 +15,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $user = User::findOrFail($id);
+
         // Validasi input
         $validated = $request->validate([
             'name' => 'nullable|string|max:255',
@@ -24,11 +24,8 @@ class UserController extends Controller
             'alamat' => 'nullable|string|max:255',
             'username' => 'nullable|string|unique:users,username,' . $id,
             'imgprofile' => 'nullable|image|mimes:jpg,jpeg,png|max:20480', // Validasi gambar profil
-            'password' => 'nullable|string|min:8', // Pastikan password dikonfirmasi jika ada
+            'password' => 'nullable|string|min:8',
         ]);
-
-        // Cari pengguna berdasarkan ID
-
 
         // Perbarui password jika ada
         if ($request->filled('password')) {
@@ -39,16 +36,12 @@ class UserController extends Controller
         if ($request->hasFile('imgprofile')) {
             // Hapus gambar lama jika ada
             if ($user->imgprofile) {
-                Storage::disk('gcs')->delete($user->imgprofile); // Menghapus gambar lama dari GCS
+                Storage::disk('gcs')->delete($user->imgprofile);
             }
 
-            // Dapatkan nama file asli
+            // Simpan gambar baru
             $fileName = $request->file('imgprofile')->getClientOriginalName();
-
-            // Simpan gambar baru dengan nama file asli ke GCS
             $path = $request->file('imgprofile')->storeAs('profile-images', $fileName, 'gcs');
-
-            // Dapatkan URL publik dari gambar yang disimpan
             $validated['imgprofile'] = Storage::disk('gcs')->url($path);
         }
 
@@ -57,7 +50,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User updated successfully',
-            'user' => $user
+            'user' => $user,
         ], 200);
     }
 }

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::put('user/update/{id}', [UserController::class, 'update']); // Update Profil
+Route::post('user/update/{id}', [UserController::class, 'update']); // Update Profil
 Route::post('register', RegisterController::class); // Registrasi
 Route::post('login', LoginController::class); //Login
 Route::post('logout', App\Http\Controllers\Api\Auth\LogoutControlller::class)->middleware('auth:sanctum'); // Logout
