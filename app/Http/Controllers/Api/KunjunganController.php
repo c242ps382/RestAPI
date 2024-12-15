@@ -46,11 +46,20 @@ class KunjunganController extends Controller
         // Gabungkan data medis dan non-medis
         $allKunjungan = $medics->merge($nonmedics);
 
+        // Jika tidak ada data, kembalikan pesan khusus
+        if ($allKunjungan->isEmpty()) {
+            return response()->json([
+                'message' => 'Tidak ada data kunjungan.',
+                'data' => [],
+            ]);
+        }
+
         return response()->json([
             'message' => 'Data kunjungan berhasil dimuat',
             'data' => $allKunjungan,
         ]);
     }
+
     public function getKunjunganDetail($type, $id)
 {
     if (strtolower($type) === 'medis') {
